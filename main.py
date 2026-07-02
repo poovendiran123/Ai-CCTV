@@ -9,6 +9,7 @@ from ultralytics import YOLO
 from twilio.rest import Client
 from dotenv import load_dotenv
 from datetime import datetime
+from openpyxl import Workbook, load_workbook
 
 # =====================================
 # LOAD ENV VARIABLES
@@ -31,7 +32,7 @@ client = Client(account_sid, auth_token)
 # SETTINGS
 # =====================================
 VIDEO_DURATION = 10
-COOLDOWN_TIME = 20
+COOLDOWN_TIME = 15
 
 
 last_alert_time = 0
@@ -150,7 +151,6 @@ def send_email(image_path, video_path):
     except Exception as e:
         print("Email Error:", e)
 
-
 # =====================================
 # WHATSAPP ALERT
 # =====================================
@@ -232,15 +232,57 @@ def record_video_ffmpeg(output_path):
     ]
 
     subprocess.run(cmd)
+
+def save_detection_to_excel(person_count, image_name, video_name):
+
+    excel_file = "detection_history.xlsx"
+
+    if not os.path.exists(excel_file):
+
+        wb = Workbook()
+        ws = wb.active
+
+        ws.append([
+            "Rank",
+            "Detection Time",
+            "Person Count",
+            "Alert Sent",
+            "Image",
+            "Video"
+        ])
+
+        wb.save(excel_file)
+
+    wb = load_workbook(excel_file)
+    ws = wb.active
+
+    rank = ws.max_row
+
+    ws.append([
+        rank,
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        person_count,
+        "Yes",
+        image_name,
+        video_name
+    ])
+
+    wb.save(excel_file)
 # =====================================
 # ALERT SYSTEM
 # =====================================
-def alert_system(frame):
+def alert_system(frame, person_count):
 
     global cap
 
     image_path = "alert.jpg"
     final_video = "alert.mp4"
+    
+    save_detection_to_excel(
+    person_count,
+    image_path,
+    final_video
+    )
     
     cv2.imwrite(image_path, frame)
 
@@ -395,7 +437,7 @@ while True:
 
         threading.Thread(
             target=alert_system,
-            args=(frame.copy(),)
+            args=(frame.copy(),person_count)
         ).start()
 
         last_alert_time = current_time
