@@ -1,64 +1,169 @@
-# AI Sentinel - Intelligent CCTV Surveillance System
+# AI CCTV Surveillance System
 
-## Overview
+An AI-powered CCTV surveillance system built using **Python**, **YOLOv8**, **OpenCV**, and **Streamlit**. The system automatically detects people in real time, captures evidence, records video with timestamps, sends instant alerts via WhatsApp and Email, and stores detection history in Excel.
 
-AI Sentinel is an AI-powered CCTV surveillance system that automatically detects people in real time using YOLOv8. The system captures images and videos, sends instant alerts, and allows remote monitoring.
+---
 
-## Features
+## 🚀 Features
 
-- Real-time Person Detection
-- YOLOv8 AI Model
-- Night Enhancement
-- Automatic Photo Capture
-- Automatic Video Recording
-- Email Alert
-- WhatsApp Alert
-- Mobile Remote Control
-- Streamlit Dashboard
-- Date & Time Stamp
+* 🎯 Real-time person detection using YOLOv8
+* 📷 Automatic image capture on detection
+* 🎥 10-second video recording with date & time watermark
+* 🌙 Night vision enhancement for low-light environments
+* 📧 Email alert with image and video attachments
+* 💬 WhatsApp notification using Twilio
+* 📊 Detection history stored in Excel
+* ⏳ Cooldown mechanism to prevent repeated alerts
+* 🖥️ Streamlit dashboard to Start/Stop the CCTV system
 
-## Technology Stack
+---
 
-- Python
-- YOLOv8
-- OpenCV
-- Streamlit
-- FFmpeg
-- Twilio API
-- SMTP (Gmail)
+## 🛠️ Technologies Used
 
-## Project Workflow
+* Python 3.x
+* OpenCV
+* YOLOv8 (Ultralytics)
+* Streamlit
+* Twilio API
+* SMTP (Gmail)
+* OpenPyXL
+* FFmpeg
 
-Camera
-↓
-YOLOv8 Detection
-↓
-Person Detected
-↓
-Capture Image
-↓
-Record Video
-↓
-Send Email & WhatsApp Alert
-↓
-Remote Monitoring
+---
 
-## Applications
+## 📂 Project Structure
 
-- Home Security
-- Office Security
-- School Surveillance
-- Factory Monitoring
-- Warehouse Security
+```text
+AI-CCTV/
+│
+├── main.py                 # AI CCTV detection system
+├── app.py                  # Streamlit dashboard
+├── email.env               # Environment variables (Not uploaded)
+├── detection_history.xlsx  # Detection logs
+├── alert.jpg               # Captured image
+├── alert.mp4               # Recorded video
+├── status.txt              # Camera ON/OFF status
+├── requirements.txt
+└── README.md
+```
 
-## Future Enhancements
+---
 
-- Multi Camera Support
-- Fire Detection
-- Smoke Detection
-- Cloud Storage
-- AI Analytics Dashboard
+## ⚙️ Installation
 
-## Author
+Clone the repository:
 
-Poovendiran
+```bash
+git clone https://github.com/yourusername/AI-CCTV.git
+
+cd AI-CCTV
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Download FFmpeg and update the FFmpeg executable path inside the project.
+
+Create an `email.env` file and configure:
+
+```env
+SENDER_EMAIL=your_email@gmail.com
+APP_PASSWORD=your_app_password
+RECEIVER_EMAIL=receiver@gmail.com
+
+TWILIO_ACCOUNT_SID=xxxxxxxxxxxx
+TWILIO_AUTH_TOKEN=xxxxxxxxxxxx
+
+TWILIO_FROM=whatsapp:+14155238886
+TWILIO_TO=whatsapp:+91xxxxxxxxxx
+```
+
+---
+
+## ▶️ Run the Project
+
+Run the AI CCTV system:
+
+```bash
+python main.py
+```
+
+Or launch the Streamlit dashboard:
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## 📷 Workflow
+
+1. Camera captures live video.
+2. YOLOv8 detects people in real time.
+3. Bounding boxes and confidence scores are displayed.
+4. Snapshot is captured.
+5. A 10-second video is recorded with timestamp.
+6. WhatsApp alert is sent.
+7. Email with image and video attachments is sent.
+8. Detection details are stored in an Excel log.
+9. Cooldown timer prevents duplicate alerts.
+
+---
+
+## 📊 Detection Log
+
+Each detection records:
+
+* Detection Time
+* Person Count
+* Alert Status
+* Image Name
+* Video Name
+
+---
+
+## 🔐 Security
+
+* Store credentials in `.env`.
+* Never commit `.env` to GitHub.
+* Add `.env`, generated videos, images, and Excel logs to `.gitignore`.
+
+Example:
+
+```gitignore
+.env
+*.xlsx
+*.mp4
+*.jpg
+__pycache__/
+```
+
+---
+
+## 📌 Future Improvements
+
+* Mobile application integration
+* Live video streaming
+* Cloud storage support
+* Face recognition
+* Intrusion detection
+* Multi-camera monitoring
+* Remote control dashboard
+* SMS and Push notifications
+
+---
+
+## 👨‍💻 Author
+
+**Surya Pachai**
+
+AI Developer | Computer Vision | Python | YOLOv8 | OpenCV | Streamlit
+
+---
+
+## ⭐ If you like this project
+
+Please give this repository a ⭐ on GitHub.
